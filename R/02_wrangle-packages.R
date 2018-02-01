@@ -4,6 +4,12 @@
 # 1. Load Packages --------------------------------------------------------
 
   require(tidyverse)
+  require(here)
+
+
+# 2. Load Data ------------------------------------------------------------
+
+
   df <- readr::read_csv("data/installed-packages.csv")
 
 ## filter out packages in the default library
@@ -25,10 +31,15 @@ apt_freqtable <- apt %>%
   count(Built) %>%
   mutate(prop = n / sum(n))
 
+  df_not_default_counts <- df_not_default %>% count(Built) %>%
+    mutate(prop = n / sum(n))
+
 ## write this data frame to data/add-on-packages-freqtable.csv
 ## YES overwrite the files that are there now
 ## they came from me (Jenny)
 ## they are just examples
+
+  write_csv(x = df_not_default_counts, path = "data/add-on-packages-freqtable.csv")
 
 ## when this script works, stage & commit it and the csv files
 ## PUSH!
